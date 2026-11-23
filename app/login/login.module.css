@@ -1,0 +1,61 @@
+.screen {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: 2rem;
+  background: radial-gradient(ellipse at 50% 15%, #202d50 0%, #0b1020 65%);
+  color: #f4f3ef;
+}
+
+.panel {
+  width: min(100%, 27rem);
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  border: 1px solid #404a65;
+  border-radius: 1.25rem;
+  background: #11182c;
+}
+
+.brand {
+  margin: 0 0 0.75rem;
+  color: #c7baff;
+  font-weight: 650;
+}
+
+.panel h1 {
+  margin: 0 0 1.5rem;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.panel :global(.login-form) {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.panel :is(input:not([type="hidden"]), button) {
+  min-height: 2.75rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #77809d;
+  border-radius: 0.5rem;
+  font: inherit;
+}
+
+.panel input:not([type="hidden"]) {
+  background: #0b1020;
+  color: inherit;
+}
+
+.panel button {
+  border-color: #c7baff;
+  background: #c7baff;
+  color: #16112b;
+  font-weight: 700;
+}
+
+.panel button:enabled { cursor: pointer; }
+.panel button:disabled { opacity: 0.75; }
+.panel a { color: #d2c9ff; }
+.panel :is(a, button, input):focus-visible {
+  outline: 2px solid #c7baff;
+  outline-offset: 3px;
+}

@@ -1,0 +1,6 @@
+platform,post_key,account_key,published_at,observed_at,topics,source_url,caption,preview_url,views,likes,comment_access,repost_key
+tiktok,10001,fake-a,2026-11-12T19:00:00Z,2026-11-16T19:00:00Z,Compact heatless curlers,https://www.tiktok.com/@outlandish-fixture-a/video/10001,Illustrative prior post.,,10,0,unavailable,
+tiktok,10002,fake-a,2026-11-17T19:00:00Z,2026-11-23T19:00:00Z,Compact heatless curlers,https://www.tiktok.com/@outlandish-fixture-a/video/10002,Illustrative wrapping demonstration.,,260,12,available,
+tiktok,10003,fake-a,2026-11-18T19:00:00Z,2026-11-23T19:00:00Z,Compact heatless curlers,https://www.tiktok.com/@outlandish-fixture-a/video/10003,Illustrative follow-up by the same account.,,0,,checked-empty,
+tiktok,10004,fake-b,2026-11-20T19:00:00Z,2026-11-23T19:00:00Z,Compact heatless curlers,https://www.tiktok.com/@outlandish-fixture-b/video/10004,Illustrative overnight result.,,,,partial,
+instagram,FixtureReel,fake-d,2026-11-21T19:00:00Z,2026-11-23T19:00:00Z,Compact heatless curlers,https://www.instagram.com/reel/FixtureReel,Illustrative second platform post.,,,,unavailable,
