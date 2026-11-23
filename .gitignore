@@ -17,3 +17,5 @@ spec.md
 prompt.md
 
 .outlandish/
+supabase/.temp/
+supabase/.branches/

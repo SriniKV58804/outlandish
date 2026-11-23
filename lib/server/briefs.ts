@@ -15,7 +15,7 @@ type ReadResult<T> = { status: 200; data: T } | ReadError;
 
 type RequestClient = NonNullable<Awaited<ReturnType<typeof createRequestClient>>>;
 
-async function requireMembership(): Promise<{ supabase: RequestClient } | ReadError> {
+export async function requireMembership(): Promise<{ supabase: RequestClient } | ReadError> {
   const supabase = await createRequestClient();
   if (!supabase) {
     return { status: 503, error: "Sign-in is unavailable." } satisfies ReadError;

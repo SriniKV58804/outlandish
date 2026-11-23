@@ -1,4 +1,6 @@
-# Run a weekly editorial brief
+# Archived CSV research importer
+
+For the current discovery app, see [Oriane collection](../docs/collection.md) and [review and publication](../docs/review.md). The following commands reproduce older CSV research separately.
 
 Use Node 24 and run the commands from the project directory. Keep CSVs, generated drafts and review files under gitignored `data/private/`. Configure `SUPABASE_URL` and `SUPABASE_SECRET_KEY` in the operator environment or `.env.local`. A legacy service-role JWT can use `SUPABASE_SERVICE_ROLE_KEY`. The viewer uses a separate publishable key. Apply the Supabase migrations before running an operation against the database.
 

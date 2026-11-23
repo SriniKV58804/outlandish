@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Outlandish | Weekly opportunities",
-  description: "A weekly brief for social commerce prospecting.",
+  title: "Outlandish — Weekly discovery",
+  description: "Weekly product discovery for Outlandish.",
   robots: { index: false, follow: false },
 };
 

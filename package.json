@@ -8,13 +8,15 @@
   },
   "scripts": {
     "dev": "next dev",
-    "dev:fixture": "OUTLANDISH_FIXTURE=1 next dev",
     "build": "next build",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "node --test tests/*.test.ts",
     "test:browser": "node --test tests/browser/*.test.ts",
-    "editorial": "node --env-file-if-exists=.env.local scripts/editorial.ts"
+    "editorial": "node --env-file-if-exists=.env.local scripts/editorial.ts",
+    "collect": "node --env-file-if-exists=.env.local scripts/collect.ts",
+    "analyze": "node --env-file-if-exists=.env.local scripts/analyze.ts",
+    "review": "node --env-file-if-exists=.env.local scripts/review.ts"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.7",

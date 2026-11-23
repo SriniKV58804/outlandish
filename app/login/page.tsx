@@ -28,7 +28,7 @@ export default async function LoginPage({
     <main className={styles.screen}>
       <section className={styles.panel} aria-labelledby="login-title">
         <p className={styles.brand}>Outlandish</p>
-        <h1 id="login-title">Sign in to the weekly brief</h1>
+        <h1 id="login-title">Open your discovery workspace</h1>
         {message && <p role="alert">{message}</p>}
         {status === "signout" && configured ? (
           <form action={signOut} className="login-form"><button>Try sign-out again</button></form>

@@ -1,61 +1,12 @@
-.screen {
-  display: grid;
-  min-height: 100svh;
-  place-items: center;
-  padding: 2rem;
-  background: radial-gradient(ellipse at 50% 15%, #202d50 0%, #0b1020 65%);
-  color: #f4f3ef;
-}
-
-.panel {
-  width: min(100%, 27rem);
-  padding: clamp(1.5rem, 5vw, 2.5rem);
-  border: 1px solid #404a65;
-  border-radius: 1.25rem;
-  background: #11182c;
-}
-
-.brand {
-  margin: 0 0 0.75rem;
-  color: #c7baff;
-  font-weight: 650;
-}
-
-.panel h1 {
-  margin: 0 0 1.5rem;
-  font-size: 2rem;
-  line-height: 1.1;
-}
-
-.panel :global(.login-form) {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.panel :is(input:not([type="hidden"]), button) {
-  min-height: 2.75rem;
-  padding: 0.55rem 0.75rem;
-  border: 1px solid #77809d;
-  border-radius: 0.5rem;
-  font: inherit;
-}
-
-.panel input:not([type="hidden"]) {
-  background: #0b1020;
-  color: inherit;
-}
-
-.panel button {
-  border-color: #c7baff;
-  background: #c7baff;
-  color: #16112b;
-  font-weight: 700;
-}
-
-.panel button:enabled { cursor: pointer; }
-.panel button:disabled { opacity: 0.75; }
-.panel a { color: #d2c9ff; }
-.panel :is(a, button, input):focus-visible {
-  outline: 2px solid #c7baff;
-  outline-offset: 3px;
-}
+.screen { --paper:#f7f2e7; display:grid; min-height:100svh; place-items:center; padding:1.5rem; color:var(--paper); background:linear-gradient(150deg,rgba(11,35,48,.64),rgba(6,22,29,.68)),url('/discovery-media/landscape.webp') center / cover; font-family:system-ui,sans-serif; }
+.panel { width:min(100%,25rem); border:1px solid #8b999b66; border-radius:10px; padding:clamp(1.4rem,4vw,2.4rem); background:rgba(18,32,37,.96); }
+.brand { color:#d4dfb4; font-weight:650; margin:0 0 2rem; }
+.panel h1 { font:400 clamp(1.9rem,4vw,2.5rem)/1.08 Georgia,serif; margin:0 0 1.3rem; }
+.panel p { line-height:1.5; }
+.panel :global(.login-form) { display:grid; gap:.8rem; }
+.panel :is(input:not([type="hidden"]),button) { min-height:2.8rem; padding:.55rem .8rem; border:1px solid #94a19a; border-radius:5px; font:inherit; }
+.panel input:not([type="hidden"]) { background:#13282c; color:inherit; }
+.panel button { background:#e6efc8; color:#18271c; font-weight:620; cursor:pointer; }
+.panel button:disabled { opacity:.7; }
+.panel a { color:#e6efc8; }
+.panel :is(a,button,input):focus-visible { outline:3px solid #f4ffe1; outline-offset:3px; }
