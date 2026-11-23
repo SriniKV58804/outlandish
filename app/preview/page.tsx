@@ -11,5 +11,5 @@ export default async function Preview() {
     const access = await requireMembership();
     if (!("supabase" in access)) notFound();
   }
-  return <DiscoveryScene brief={previewBrief} />;
+  return <DiscoveryScene brief={previewBrief} accountAction={<a href="/">Back to workspace</a>} />;
 }

@@ -27,7 +27,8 @@ export default async function Home({ searchParams }: {
   if (result.status === 404) notFound();
   if (result.status === 200) {
     if (clip && !result.data.opportunities.find(item => item.id === opportunity)?.clips.some(item => item.id === clip)) notFound();
-    return <DiscoveryScene brief={result.data} initialId={opportunity} initialClipId={clip} accountAction={<SignOut />} />;
+    return <DiscoveryScene brief={result.data} initialId={opportunity} initialClipId={clip} accountAction={<SignOut />}
+      showPreviewLink={process.env.NODE_ENV === "development" || process.env.OUTLANDISH_ENABLE_PREVIEW === "1"} />;
   }
   const denied = result.status === 403;
   return (

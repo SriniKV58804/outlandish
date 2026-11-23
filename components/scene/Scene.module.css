@@ -525,6 +525,20 @@
   line-height: 1.5;
   margin: 0;
 }
+.previewLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 8px;
+  color: var(--accent);
+  text-underline-offset: 4px;
+}
+.account a {
+  color: inherit;
+  font-size: 12px;
+  text-underline-offset: 3px;
+}
 .scene .noMedia {
   font-size: 12px;
   padding: 10px 15px;

@@ -11,24 +11,25 @@ export default function LoginForm({ next, retryPath }: { next: string; retryPath
   if (request.step === "code" && email) {
     return (
       <form action={verify} className="login-form">
-        <p>If this email has been invited, a sign-in code is on its way.</p>
+        <p>Check your inbox for a sign-in link. Open it in this browser. If your email contains a code, enter it below.</p>
         <input name="email" type="hidden" value={email} />
         <input name="next" type="hidden" value={next} />
         <label htmlFor="code">Sign-in code</label>
         <input id="code" name="code" inputMode="numeric" autoComplete="one-time-code" required />
         {verification.error && <p role="alert">{verification.error}</p>}
         <button disabled={verifying}>{verifying ? "Checking…" : "Sign in"}</button>
-        <a href={retryPath}>Use a different email or request a new code</a>
+        <a href={retryPath}>Use a different email or try again</a>
       </form>
     );
   }
 
   return (
     <form action={send} className="login-form">
+      <input name="next" type="hidden" value={next} />
       <label htmlFor="email">Invited email address</label>
       <input id="email" name="email" type="email" autoComplete="email" maxLength={254} required />
       {request.error && <p role="alert">{request.error}</p>}
-      <button disabled={sending}>{sending ? "Requesting…" : "Send sign-in code"}</button>
+      <button disabled={sending}>{sending ? "Requesting…" : "Email me a sign-in link"}</button>
     </form>
   );
 }

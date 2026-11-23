@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Sign in | Outlandish", robots: "noindex, nofollow" };
 
 const messages: Record<string, string> = {
-  invalid: "That sign-in link has expired or already been used. Request a new code.",
+  invalid: "Open your latest sign-in link in the browser where you requested it, or request a new link.",
   unavailable: "Sign-in is unavailable right now.",
   signout: "Sign-out could not finish. Try again.",
 };

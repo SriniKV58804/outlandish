@@ -26,7 +26,7 @@ npx supabase db push --dry-run
 npx supabase db push
 ```
 
-4. In **Authentication → URL Configuration**, set the Site URL to the Vercel production origin. Allow its exact `/auth/confirm` callback and the local callback if testing locally. Disable public sign-ups. In **Email Templates**, include `{{ .Token }}` in the Magic Link template for code sign-in. For invitation emails, use `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite`. Configure SMTP if the intended viewer is outside the project team's default email allowance.
+4. In **Authentication → URL Configuration**, set the Site URL to the Vercel production origin. Allow its exact `/auth/confirm` callback and the local callback if testing locally. Disable public sign-ups. The stock magic-link email works when opened in the browser that requested it. With custom SMTP you can also include `{{ .Token }}` for code sign-in. For invitation emails use `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite`. Configure SMTP for viewers outside the project team's default email allowance. For a custom production origin, set `OUTLANDISH_SITE_URL` to that origin.
 5. In **Authentication → Users**, invite the intended viewer. Then use the Supabase SQL Editor to grant access to that exact user. Use the invited email in the statement and confirm a single user was returned.
 
 ```sql

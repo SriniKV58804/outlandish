@@ -16,3 +16,19 @@ export function loginPath(next: string, status?: string): string {
   if (next !== "/") query.set("next", next);
   return query.size ? `/login?${query.toString()}` : "/login";
 }
+
+export function signInCallback(requestOrigin: string | null, siteUrl: string | undefined,
+  productionHost: string | undefined, development: boolean): string | null {
+  try {
+    if (!requestOrigin) return null;
+    const origin = new URL(requestOrigin);
+    const local = development && origin.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(origin.hostname);
+    const hosted = origin.protocol === "https:" && (
+      (productionHost && origin.origin === `https://${productionHost}`) || (siteUrl && origin.origin === new URL(siteUrl).origin)
+    );
+    if (!local && !hosted) return null;
+    return new URL("/auth/confirm", origin.origin).href;
+  } catch {
+    return null;
+  }
+}

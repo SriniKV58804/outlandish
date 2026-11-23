@@ -1,8 +1,9 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies, headers } from "next/headers";
 import { createRequestClient } from "../../lib/server/supabase";
-import { approvedReturnPath } from "../../lib/server/redirects";
+import { approvedReturnPath, signInCallback } from "../../lib/server/redirects";
 
 type LoginState = { step: "email" | "code"; email?: string; error?: string };
 
@@ -15,8 +16,19 @@ export async function requestCode(_state: LoginState, formData: FormData): Promi
   const supabase = await createRequestClient();
   if (!supabase) return { step: "email", error: "Sign-in is unavailable right now." };
 
-  // Give the same response for unknown, disabled and existing addresses.
-  await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false } });
+  const origin = (await headers()).get("origin");
+  const callback = signInCallback(origin, process.env.OUTLANDISH_SITE_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL, process.env.NODE_ENV === "development");
+  if (!callback) return { step: "email", error: "Open the production workspace URL to sign in." };
+  const { error } = await supabase.auth.signInWithOtp({
+    email, options: { shouldCreateUser: false, emailRedirectTo: callback },
+  });
+  if (error?.status === 429) return { step: "email", error: "Too many requests. Try again in a few minutes." };
+  if (error && (!error.status || error.status >= 500)) return { step: "email", error: "Email sign-in is temporarily unavailable. Try again later." };
+  // Keep the same screen for invited, unknown and delivery-restricted addresses.
+  (await cookies()).set("outlandish-return", approvedReturnPath(formData.get("next")), {
+    path: "/auth/confirm", httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 3600,
+  });
   return { step: "code", email };
 }
 

@@ -68,11 +68,13 @@ export default function DiscoveryScene({
   initialId,
   initialClipId,
   accountAction,
+  showPreviewLink = false,
 }: {
   brief: SceneBrief;
   initialId?: string;
   initialClipId?: string;
   accountAction?: React.ReactNode;
+  showPreviewLink?: boolean;
 }) {
   const initialTopic = brief.opportunities.find(
     (item) => item.id === initialId,
@@ -615,8 +617,9 @@ export default function DiscoveryScene({
       </div>
       {!topics.length && (
         <div className={s.empty}>
-          <h2>No published opportunities yet</h2>
+          <h2>{brief.publishedAt ? "No clips available this week" : "No published opportunities yet"}</h2>
           <p>{brief.coverage}</p>
+          {showPreviewLink && !brief.publishedAt && <a href="/preview" className={s.previewLink}>Explore the design preview <Icon name="arrow" size={16} /></a>}
         </div>
       )}
       {topics.length > 0 && !hasPhoto && selectedIndex < 0 && (
