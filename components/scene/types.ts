@@ -19,7 +19,13 @@ export interface SceneOpportunity {
   finding: string;
   category?: string;
   clips: SceneClip[];
-  prospect?: { brand: string; name: string; url: string; fit: string; sizeBasis?: string };
+  prospect?: {
+    brand: string;
+    name: string;
+    url: string;
+    fit: string;
+    sizeBasis?: string;
+  };
   pitch?: { format: string; idea: string; rationale?: string };
   statistics?: string[];
   uncertainties?: string[];

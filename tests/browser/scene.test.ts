@@ -52,6 +52,11 @@ test("anonymous visitors cannot obtain opportunities or select the preview throu
     assert.equal(typeof payload.error, "string");
     assert.equal(payload.opportunities, undefined);
   }
+  for (const method of ["GET", "POST"]) {
+    const response = await fetch(new URL("/api/collection/refresh", origin), { method });
+    assert.equal(response.status, 401);
+    assert.match(response.headers.get("cache-control") ?? "", /no-store/i);
+  }
 });
 
 test("desktop displays real image resources, pans at multiple depths and restores the camera after inspection", async (t) => {
@@ -108,8 +113,20 @@ test("desktop displays real image resources, pans at multiple depths and restore
   assert.ok(Math.max(...shifts) - Math.min(...shifts) > 5, "clip depths must move differently");
   assert.ok(Math.max(...shifts) > Math.abs(horizonAfter.x - horizonBefore.x) + 5, "foreground crosses the horizon");
 
-  // Stop any residual camera inertia before recording the return point.
+  // A real drag coasts after release. Save the settled position so the
+  // return assertion compares the exact departure and arrival coordinates.
   await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.getByTestId("scene-horizon").evaluate(async (horizon) => {
+    let prior = horizon.getBoundingClientRect().x;
+    let stillFrames = 0;
+    const deadline = performance.now() + 3000;
+    while (stillFrames < 6 && performance.now() < deadline) {
+      await new Promise(requestAnimationFrame);
+      const next = horizon.getBoundingClientRect().x;
+      stillFrames = Math.abs(next - prior) < 0.001 ? stillFrames + 1 : 0;
+      prior = next;
+    }
+  });
   const topic = await reachable(page.getByTestId("scene-topic"));
   const topicId = await topic.getAttribute("data-topic-id");
   assert.ok(topicId);
@@ -123,14 +140,22 @@ test("desktop displays real image resources, pans at multiple depths and restore
   await clip.press("Enter");
   const detail = page.getByRole("dialog", { name: "Clip evidence" });
   await detail.waitFor();
+  const detailLink = new URL(page.url());
+  assert.equal(detailLink.searchParams.get("opportunity"), topicId);
+  assert.equal(detailLink.searchParams.get("clip"), id);
+  const direct = await context.newPage();
+  await direct.goto(detailLink.href);
+  await direct.getByRole("dialog", { name: "Clip evidence" }).waitFor();
+  await direct.close();
   await screenshot(page, "clip-evidence.png");
   assert.ok((await detail.innerText()).trim().length > 40);
   await page.keyboard.press("Escape");
   await detail.waitFor({ state: "hidden" });
-  assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("data-post-id")), id);
+  await page.waitForFunction((id) => document.activeElement?.getAttribute("data-post-id") === id, id);
   await page.keyboard.press("Escape");
   await page.locator('[data-testid="scene-world"][data-mode="overview"]').waitFor();
-  assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("data-topic-id")), topicId);
+  await page.waitForFunction((id) => document.activeElement?.getAttribute("data-topic-id") === id, topicId);
+  assert.equal(new URL(page.url()).searchParams.has("opportunity"), false);
   const restored = await positions(page);
   for (const [index, card] of restored.entries()) {
     assert.equal(card.id, saved[index].id);
@@ -159,6 +184,8 @@ test("at phone width, a tap and the list reach evidence with reduced motion and 
   const allClips = page.getByTestId("scene-clip");
   const clips = id ? allClips.and(page.locator('[data-topic-id=' + JSON.stringify(id) + ']')) : allClips;
   const clip = await reachable(clips);
+  assert.equal(await clip.evaluate(el => getComputedStyle(el).transitionDuration
+    .split(",").every(duration => Number.parseFloat(duration) === 0)), true);
   await clip.tap();
   const detail = page.getByRole("dialog", { name: "Clip evidence" });
   await detail.waitFor();
